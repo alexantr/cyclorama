@@ -2,8 +2,6 @@
 	$.fn.cyclorama = function (o) {
 
 		o = $.extend({
-			panLeft: null,
-			panRight: null,
 			useKeyboard: false // включить перемотку клавиатурой
 		}, o || {});
 
@@ -11,8 +9,14 @@
 
 			var $pan = $(this);
 			var $panInner = $pan.find('.pan-inner');
+			var $panLeft = $pan.find('.pan-left');
+			var $panRight = $pan.find('.pan-right');
 
 			///////////////
+
+			var contentWidth = $panInner.find('.pan-content').width();
+			$panInner.append($panInner.find('.pan-content').clone());
+			$panInner.css({width: contentWidth * 2});
 
 			var initPos = -Math.round($panInner.width() / 2); // начальное положение
 
@@ -34,12 +38,8 @@
 			$pan.on('mouseup touchend', dragEnd);
 			$pan.on('mousemove touchmove', dragging);
 			// влево, вправо
-			if (o.panLeft) {
-				$(o.panLeft).on('click', dragRight);
-			}
-			if (o.panRight) {
-				$(o.panRight).on('click', dragLeft);
-			}
+			$($panLeft).on('click', dragRight);
+			$($panRight).on('click', dragLeft);
 			// клавиатура
 			if (o.useKeyboard) {
 				$(document).on("keydown", function (e) {
@@ -139,7 +139,7 @@
 				percentage = 100 - ((Math.abs(initPos) - Math.abs(curPos)) / Math.abs(initPos) * 100);
 				if (percentage == 100) percentage = 0;
 
-				//showPercentage();
+				showPercentage();
 			}
 
 			// плавное смещение
@@ -170,9 +170,9 @@
 			//////////
 
 			// show percentage
-			/*function showPercentage() {
-				$('#info').text(percentage + '%');
-			}*/
+			function showPercentage() {
+				$pan.find('.pan-runner').css({left: percentage + '%'});
+			}
 		});
 	};
 

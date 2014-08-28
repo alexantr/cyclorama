@@ -2,28 +2,3 @@
 	margin: 0;
 	padding: 0;
 }
-#pan {
-	position: relative;
-	width: 100%;
-	height: 611px;
-	overflow: hidden;
-}
-#pan:hover {
-	cursor: move;
-}
-#pan .pan-inner {
-	position: absolute;
-	display: block;
-	width: 10000px; /* ширина 2-х панорам */
-	height: 611px;
-	overflow: hidden;
-	left: -5000px; /* смещение на половину */
-	top: 0;
-}
-#pan .pan-content {
-	float: left;
-}
-/* custom */
-#pan .pan-content img {
-	float: left;
-}

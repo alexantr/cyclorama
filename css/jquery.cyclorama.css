@@ -22,6 +22,7 @@
 }
 .cyclorama .pan-left,
 .cyclorama .pan-right {
+	display: none;
 	position: absolute;
 	width: 50px;
 	height: 100%;
@@ -35,9 +36,9 @@
 	overflow: hidden;
 	text-indent: -999px;
 }
-.cyclorama .pan-left:hover,
-.cyclorama .pan-right:hover {
-	background: rgba(255, 255, 255, 0.3);
+.cyclorama:hover .pan-left,
+.cyclorama:hover .pan-right {
+	display: block;
 }
 .cyclorama .pan-left {
 	left: 0;
@@ -48,7 +49,7 @@
 .cyclorama .pan-percentage {
 	position: absolute;
 	width: 100%;
-	height: 10px;
+	height: 4px;
 	left: 0;
 	bottom: 0;
 	z-index: 1;
@@ -56,10 +57,10 @@
 }
 .cyclorama .pan-runner {
 	position: absolute;
-	width: 10px;
-	height: 10px;
+	width: 6px;
+	height: 4px;
 	left: 0;
 	top: 0;
-	margin-left: -5px;
+	margin-left: -3px;
 	background: #fff;
 }

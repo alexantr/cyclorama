@@ -2,7 +2,7 @@
 
 ## Demo
 
-[http://yashkin.by/panorama/](http://yashkin.by/panorama/)
+[http://yashkin.by/panorama/](http://yashkin.by/cyclorama/)
 
 ## Usage
 

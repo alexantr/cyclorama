@@ -1,4 +1,8 @@
-(function ($) {
+/**
+ * jQuery Cyclorama
+ * Copyright 2014, Alexander Yashkin
+ */
+;(function ($) {
 	$.fn.cyclorama = function (o) {
 
 		o = $.extend({
@@ -14,10 +18,19 @@
 
 			///////////////
 
+			var screenWidth = window.screen.width;
 			var contentWidth = $panInner.find('.pan-content').width();
-			$panInner.append($panInner.find('.pan-content').clone());
-			$panInner.css({width: contentWidth * 2});
 
+			// доведем кол-во блоков pan-content до ширины экрана
+			while (contentWidth <= screenWidth) {
+				$panInner.append($panInner.find('.pan-content').clone());
+				contentWidth += contentWidth;
+			}
+
+			// затем еще удвоим их кол-во
+			$panInner.append($panInner.find('.pan-content').clone());
+
+			$panInner.css({width: contentWidth * 2}); // общая ширина
 			var initPos = -Math.round($panInner.width() / 2); // начальное положение
 
 			var startPos = initPos; // положение в начале драга

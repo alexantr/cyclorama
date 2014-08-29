@@ -1,12 +1,9 @@
-/**
- * jQuery Cyclorama
- * Copyright 2014, Alexander Yashkin
- */
+/*! http://yashkin.by/cyclorama/ by @alexantr */
 ;(function ($) {
 	$.fn.cyclorama = function (o) {
 
 		o = $.extend({
-			useKeyboard: false // включить перемотку клавиатурой
+			useKeyboard: false // enable keyboard support
 		}, o || {});
 
 		return this.each(function () {
@@ -16,22 +13,20 @@
 			var $panLeft = $pan.find('.pan-left');
 			var $panRight = $pan.find('.pan-right');
 
-			///////////////
-
+			// cloning
 			var screenWidth = window.screen.width;
 			var contentWidth = $panInner.find('.pan-content').width();
 
-			// доведем кол-во блоков pan-content до ширины экрана
 			while (contentWidth <= screenWidth) {
 				$panInner.append($panInner.find('.pan-content').clone());
 				contentWidth += contentWidth;
 			}
 
-			// затем еще удвоим их кол-во
+			// multiply by 2
 			$panInner.append($panInner.find('.pan-content').clone());
 
-			$panInner.css({width: contentWidth * 2}); // общая ширина
-			var initPos = -Math.round($panInner.width() / 2); // начальное положение
+			$panInner.css({width: contentWidth * 2}); // set full width
+			var initPos = -Math.round($panInner.width() / 2); // init position (-50% left)
 
 			var startPos = initPos; // положение в начале драга
 			var curPos = initPos; // положение относительно стартового
@@ -179,8 +174,6 @@
 				dist = Math.abs(posx - prevPos);
 				prevPos = posx;
 			}
-
-			//////////
 
 			// show percentage
 			function showPercentage() {

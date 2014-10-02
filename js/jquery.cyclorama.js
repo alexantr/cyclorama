@@ -28,40 +28,39 @@
 			$panInner.css({width: contentWidth * 2}); // set full width
 			var initPos = -Math.round($panInner.width() / 2); // init position (-50% left)
 
-			var startPos = initPos; // положение в начале драга
-			var curPos = initPos; // положение относительно стартового
-			var prevPos = 0; // предыдущее положение для расчета инерции
-			var dirPrevPos; // предыдущее положение для расчета направления
+			var startPos = initPos; // position while dragging start
+			var curPos = initPos; // current position while dragging
+			var prevPos = 0; // previous position for calc inertia
+			var dirPrevPos; // previous position for calc direction
 
-			var direction = 0; // 1 - вправо, 2 - влево, 0 - никак
-			var offsetX = 0; // смещение при драге
-			var isDragging = false; // идет ли перетаскивание
-			var percentage = 0; // процент смещения
+			var direction = 0; // 1 - left, 2 - right, 0 - nothing
+			var offsetX = 0; // drag offset
+			var isDragging = false; // is dragging now
+			var percentage = 0; // offset percentage
 
 			var timer;
-			var dist = 0; // дистанция для расчета инерции
+			var dist = 0; // distance for inertia
 			var posx;
 
-			$pan.on('mousedown touchstart', dragStart);
-			$pan.on('mouseup touchend', dragEnd);
-			$pan.on('mousemove touchmove', dragging);
-			// влево, вправо
-			$($panLeft).on('click', dragRight);
-			$($panRight).on('click', dragLeft);
-			// клавиатура
+			$panInner.on('mousedown touchstart', dragStart);
+			$panInner.on('mouseup touchend', dragEnd);
+			$panInner.on('mousemove touchmove', dragging);
+			// left, right
+			$($panLeft).on('mousedown', goRight);
+			$($panRight).on('mousedown', goLeft);
+			// keyboard left, right
 			if (o.useKeyboard) {
 				$(document).on("keydown", function (e) {
 					if (e.which == 37) {
 						e.preventDefault();
-						dragRight();
+						goRight();
 					} else if (e.which == 39) {
 						e.preventDefault();
-						dragLeft();
+						goLeft();
 					}
 				});
 			}
 
-			// нажали
 			function dragStart(e) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -72,28 +71,26 @@
 					offsetX = e.pageX;
 
 				isDragging = true;
-				direction = 0; // сбросим направление
+				direction = 0; // reset direction
 
 				prevPos = 0;
 				timer = window.setInterval(setDist, 100);
 			}
 
-			// отпустили
 			function dragEnd(e) {
 				e.preventDefault();
 				e.stopPropagation();
 
 				isDragging = false;
 
-				startPos = curPos; // новое положение для старта драга
+				startPos = curPos; // new position for drag start
 
-				// плавное завершение
+				// smooth ending
 				smooth(dist);
 
 				window.clearInterval(timer);
 			}
 
-			// двигаем
 			function dragging(e) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -105,7 +102,7 @@
 					else
 						posx = e.pageX - offsetX;
 
-					// направление
+					// direction
 					if (typeof(dirPrevPos) != 'undefined') {
 						var deltaX = dirPrevPos - e.pageX;
 						if (deltaX > 0)
@@ -121,19 +118,18 @@
 				}
 			}
 
-			// перемещение влево
-			function dragLeft() {
+			function goLeft(e) {
+				e.preventDefault();
 				direction = 2;
 				smooth(250);
 			}
 
-			// перемещение вправо
-			function dragRight() {
+			function goRight(e) {
+				e.preventDefault();
 				direction = 1;
 				smooth(250);
 			}
 
-			// смещение
 			function move(pos) {
 				curPos = startPos + pos;
 
@@ -150,7 +146,6 @@
 				showPercentage();
 			}
 
-			// плавное смещение
 			function smooth(dist) {
 				if (!isDragging && dist > 1) {
 
@@ -169,13 +164,11 @@
 				}
 			}
 
-			// расчет дистанции для инерции
 			function setDist() {
 				dist = Math.abs(posx - prevPos);
 				prevPos = posx;
 			}
 
-			// show percentage
 			function showPercentage() {
 				$pan.find('.pan-runner').css({left: percentage + '%'});
 			}

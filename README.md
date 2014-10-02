@@ -1,8 +1,6 @@
 # jQuery Cyclorama
 
-## Demo
-
-[http://yashkin.by/panorama/](http://yashkin.by/cyclorama/)
+## [Demo](http://yashkin.by/cyclorama/)
 
 ## Usage
 

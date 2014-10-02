@@ -46,17 +46,15 @@
 			$panInner.on('mouseup touchend', dragEnd);
 			$panInner.on('mousemove touchmove', dragging);
 			// left, right
-			$($panLeft).on('mousedown', goRight);
-			$($panRight).on('mousedown', goLeft);
+			$panLeft.on('mousedown touchstart', goRight);
+			$panRight.on('mousedown touchstart', goLeft);
 			// keyboard left, right
 			if (o.useKeyboard) {
 				$(document).on("keydown", function (e) {
 					if (e.which == 37) {
-						e.preventDefault();
-						goRight();
+						goRight(e);
 					} else if (e.which == 39) {
-						e.preventDefault();
-						goLeft();
+						goLeft(e);
 					}
 				});
 			}

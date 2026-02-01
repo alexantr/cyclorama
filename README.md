@@ -1,6 +1,6 @@
 # jQuery Cyclorama
 
-## [Demo](http://yashkin.by/cyclorama/)
+## [Demo](https://tmpfiles.xyz/cyclorama/)
 
 ## Usage
 
